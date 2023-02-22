@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ title }} | Ventory \_/ By Acasia</title>
+    <!--link href="//db.onlinewebfonts.com/c/527c5ab608cab860a6aae8ce02e14b0e?family=Calibri" rel="stylesheet" type="text/css"/-->
+    <link rel="stylesheet" href="css/print_page.css">
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <style>
+        @page {
+            size: auto;   /* auto is the initial value */
+            /* this affects the margin in the printer settings */
+            margin: 10mm 10mm 1mm 10mm;
+        }
+
+        body {
+            /* this affects the margin on the content before sending to printer */
+            margin: 0px;
+        }
+    </style>
+</head>
+<body>
+<div class="row">
+    <div id="kk1" class="col l3">
+        <button onclick="myFunction()" style="font-size: large;margin-top: 11px;">Print this page</button>
+    </div>
+    <div class="col l6"></div>
+    <div id="kk2" class="col l3">
+        <h4><a style="font-size: 20px;" href="/invoice/list">Return to Invoices</a></h4>
+    </div>
+
+    <div class="col l12">
+        <div class="col l3">
+
+        </div>
+        <div class="col l6">
+            <p style="font-size: 12px; text-align: center; margin-top: -1px;" class="center">TAX INVOICE</p>
+
+        </div>
+        <div class="col l3" >
+            <p id="change_for_transport" style="font-style: italic;font-style: italic; margin-top: 1px;">(Original for Recipent)</p>
+        </div>
+
+    </div>
+</div>
+
+<div class="row" style="margin-bottom: 0px">
+    <table cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+        <tr style="font-style: normal">
+            <td colspan="2" rowspan="4"><span
+                    style="font-weight: 800;">{{invoicePackage.companyNameUpper }}</span>
+                <br>{{invoicePackage.company.address }}
+                <br>{{invoicePackage.company.city }}  
+                <br>Company Code : {{invoicePackage.company.gstin }}
+                <br>E-Mail : {{invoicePackage.company.email }}</td>
+            
+        </tr>
+        
+        
+        
+        <tr style="font-style: normal;">
+            <td colspan="2" rowspan="6"><span style="color:grey;">Seller</span><br>
+                <p><span style="font-weight: 800;">{{invoicePackage.party.name }}</span>
+                    <br>{{invoicePackage.party.address }}
+                    <br>{{invoicePackage.party.city }}
+                    <br>Mobile-{{invoicePackage.party.mobileNumber }}<br>
+                    <br>Supplier Code : {{invoicePackage.party.gstin }}
+                    <br>State Name: {{invoicePackage.party.state }},
+                    Code: {{invoicePackage.party.partyGstinStateCode }}
+                    <br>Place of supply : {{invoicePackage.party.state }}
+                    <br>E-Mail : {{invoicePackage.party.email }}</p></td>
+           
+           
+            
+        </tr>
+        
+        
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+    </table>
+
+
+    <table style="height: 35px; width: 100%" cellspacing="0" cellpadding="0">
+        <tr>
+            <td style="border-top: none; border-bottom: none;"></td>
+        </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+        <tr id="1">
+            <th style="width:3%; color:grey;"> Sr.<br>no</th>
+            <th style="width:26%; color:grey;"> Description of Goods</th>
+            <th style="width:15%; color:grey;"> Item Code</th>
+            <th style="width:15%; color:grey;"> Quantity</th>
+            <th style="width:15%; color:grey;"> Rate</th>
+            <th style="width:5%; color:grey;"> per</th>
+            <th style="width:5%; color:grey;"> Tax Rate</th>
+            <th style="width:15%; color:grey;"> Amount</th>
+        </tr>
+        {{#each invoicePackage.invoiceItems }}
+            <tr style="height:15.8px" id="2">
+                <td style="border-bottom: none; border-top:none"
+                    rowspan="{{#if this.sr_noequaltotalitems}}{{invoicePackage.totalItems14}}{{else}}1{{/if}}"
+                ><p>{{this.sr_no }}</p></td>
+                <td rowspan="{{#if this.sr_noequaltotalitems}}{{invoicePackage.totalItems14}}{{else}}1{{/if}}"
+                    style="border-bottom: none; border-top:none;">
+                    <p style="font-weight: 800">{{this.item.newModelName }} {{this.item.typeId.type }}<br><span
+                            style="font-size: 10px;font-weight: normal;">
+                        {{#each this.serialNos }}{{this.serialNumber }}
+                            <br>{{/each}}</span></p>
+                </td>
+                <td rowspan="{{#if this.sr_noequaltotalitems}}{{invoicePackage.totalItems14}}{{else}}1{{/if}}"
+                    style="border-bottom: none; border-top:none;"><p
+                        style="text-align: center;">{{this.item.hsn }}</p></td>
+                <td rowspan="{{#if this.sr_noequaltotalitems}}{{invoicePackage.totalItems14}}{{else}}1{{/if}}"
+                    style="border-bottom: none; border-top:none;"><p
+                        style="text-align: end; font-weight: 800;">{{this.invoiceItem.quantity }} PCS</p>
+                </td>
+                <td rowspan="{{#if this.sr_noequaltotalitems}}{{invoicePackage.totalItems14}}{{else}}1{{/if}}"
+                    style="border-bottom: none; border-top:none;"><p
+                        style="text-align: end;">{{this.invoiceItem.ratePer }}</p>
+                </td>
+                <td rowspan="{{#if this.sr_noequaltotalitems}}{{invoicePackage.totalItems14}}{{else}}1{{/if}}"
+                    style="border-bottom: none; border-top:none;"><p>PCS</p></td>
+                <td rowspan="{{#if this.sr_noequaltotalitems}}{{invoicePackage.totalItems14}}{{else}}1{{/if}}"
+                    style="border-bottom: none; border-top:none;"><p
+                        style="text-align: end">{{this.item.tax }}%</p></td>
+                <td rowspan="{{#if this.sr_noequaltotalitems}}{{invoicePackage.totalItems14}}{{else}}1{{/if}}"
+                    style="border-bottom: none; border-top:none;"><p
+                        style="text-align: end; font-weight: 800;">{{this.amount }}</p></td>
+            </tr>
+        {{/each}}
+        {{#each invoicePackage.totalItems13 }}
+            <tr></tr>
+        {{/each}}
+        <!--
+        -->
+        <!--tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+      <tr></tr>
+        <tr></tr>
+        <tr></tr-->
+        <tr id="15">
+            <td><p></p></td>
+            <td><p style="font-weight: 500; text-align: end">Base Price</p></td>
+            <td><p></p></td>
+            <td><p></p></td>
+            <td><p></p></td>
+            <td><p></p></td>
+            <td><p></p></td>
+            <td><p style="text-align: end; font-weight: normal">{{invoicePackage.hsnTaxableTotal }}</p></td>
+        </tr>
+        {{#if invoicePackage.taxTypeGst }}
+            <tr id="16">
+                <td><p></p></td>
+                <td><p style="font-weight: 700; text-align: end">CGST</p></td>
+                <td><p></p></td>
+                <td><p></p></td>
+                <td><p></p></td>
+                <td><p></p></td>
+                <td><p></p></td>
+                <td><p style="text-align: end; font-weight: 800;">{{invoicePackage.tax }}</p></td>
+            </tr>
+            <tr id="17">
+                <td><p></p></td>
+                <td><p style="font-weight: 700; text-align: end">SGST</p></td>
+                <td><p></p></td>
+                <td><p></p></td>
+                <td><p></p></td>
+                <td><p></p></td>
+                <td><p></p></td>
+                <td><p style="text-align: end;font-weight: 800">{{invoicePackage.tax }}</p></td>
+            </tr>
+        {{else}}
+
+            <tr id="17">
+                <td><p></p></td>
+                <td><p style="font-weight: 700; text-align: end">SST/GST</p></td>
+                <td><p></p></td>
+                <td><p></p></td>
+                <td><p></p></td>
+                <td><p></p></td>
+                <td><p></p></td>
+                <td><p style="text-align: end; font-weight: 800;">{{invoicePackage.tax }}</p></td>
+            </tr>
+        {{/if}}
+        <tr id="18">
+            <td><p></p></td>
+            <td><p style="text-align: end; font-weight: 700;">Rounding Off</p></td>
+            <td><p></p></td>
+            <td><p></p></td>
+            <td><p></p></td>
+            <td><p></p></td>
+            <td><p></p></td>
+            <td><p style="text-align: end; font-weight: 800;">{{invoicePackage.roundOff }}</p></td>
+        </tr>
+        <tr id="19">
+            <td><p></p></td>
+            <td><p>Total</p></td>
+            <td><p></p></td>
+            <td><p style="text-align: end; font-weight: 800;">{{invoicePackage.totalQuantity }} PCS</p></td>
+            <td><p></p></td>
+            <td><p></p></td>
+            <td><p></p></td>
+            <td><p style="text-align: end; font-weight: 800;">{{invoicePackage.total }}</p></td>
+        </tr>
+    </table>
+    <table id="words_table" cellpadding="0" cellspacing="0" style="width: 100%; page-break-after: auto; ">
+        <tr>
+            <td style="border-top:none; border-bottom: none;"><span
+                    style="color:grey">Amount Chargeable (in words)</span><br>
+                <p style="font-weight: 800">{{invoicePackage.totalWords }} </p></td>
+        </tr>
+    </table>
+    {{#if invoicePackage.taxTypeGst }}
+        <table id="hsn_sac" cellpadding="0" cellspacing="0"
+               style="width: 100%; border-collapse: collapse; height: 12px;">
+            <tr id="1">
+                <th rowspan="2" style=" width:25%; color:grey; vertical-align: middle;"> HSN/SAC</th>
+                <th rowspan="2" style="width:10%; color:grey; vertical-align: middle;"> Taxable</th>
+                <th colspan="2" style="width:20%; color:grey;"> Central Tax</th>
+                <th colspan="2" style="width:20%; color:grey;"> State Tax</th>
+                <th rowspan="2" style="width:25%; color:grey; vertical-align: middle;"> Total <br>Tax Amount</th>
+            </tr>
+            <tr id="1">
+                <th style="width:10%; color:grey;"> Rate</th>
+                <th style="width:10%; color:grey;"> Amount</th>
+                <th style="width:10%; color:grey;"> Rate</th>
+                <th style="width:10%; color:grey;"> Amount</th>
+
+            </tr>
+            {{#each invoicePackage.hsnList }}
+                <tr id="1">
+                    <td><p>{{x }}</p></td>
+                    <td><p style="text-align: end;">{{this.[0] }}</p></td>
+                    <td><p style="text-align: end;">{{this.[4] }}%</p></td>
+                    <td><p style="text-align: end;">{{this.[2] }}</p></td>
+                    <td><p style="text-align: end;">{{this.[4] }}%</p></td>
+                    <td><p style="text-align: end;">{{this.[2] }}</p></td>
+                    <td><p style="text-align: end;">{{this.[3] }}</p></td>
+                </tr>
+            {{/each}}
+            <tr id="1">
+                <td><p style="text-align: end;font-weight: 800;">Total</p></td>
+                <td><p style="text-align: end; font-weight: 800;">{{invoicePackage.hsnTaxableTotal }}</p></td>
+                <td><p></p></td>
+                <td><p style="text-align: end;font-weight: 800;">{{invoicePackage.totalTaxAmount2 }}</p></td>
+                <td><p></p></td>
+                <td><p style="text-align: end; font-weight: 800;">{{invoicePackage.totalTaxAmount2 }}</p></td>
+                <td><p style="text-align: end; font-weight: 800;">{{invoicePackage.totalTaxAmount }}</p></td>
+            </tr>
+        </table>
+    {{else }}
+        <table id="hsn_sac" cellpadding="0" cellspacing="0"
+               style="width: 100%; border-collapse: collapse; height: 12px;">
+            <tr id="1">
+                <th rowspan="2" style=" width:40%; color:grey; vertical-align: middle;"> HSN/SAC</th>
+                <th rowspan="2" style="width:15%; color:grey; vertical-align: middle;"> Taxable</th>
+                <th colspan="2" style="width:30%; color:grey;"> Integrated Tax</th>
+                <th rowspan="2" style="width:25%; color:grey; vertical-align: middle;"> Total <br>Tax Amount</th>
+            </tr>
+            <tr id="1">
+                <th style="width:15%; color:grey;"> Rate</th>
+                <th style="width:15%; color:grey;"> Amount</th>
+
+            </tr>
+            {{#each invoicePackage.hsnList }}
+                <tr id="1">
+                    <td><p>{{x }}</p></td>
+                    <td><p style="text-align: end;">{{this.[0] }}</p></td>
+                    <td><p style="text-align: end;">{{this.[4] }}%</p></td>
+                    <td><p style="text-align: end;">{{this.[2] }}</p></td>
+                    <td><p style="text-align: end;">{{this.[3] }}</p></td>
+                </tr>
+            {{/each}}
+            <tr id="1">
+                <td><p style="text-align: end; font-weight: 800;">Total</p></td>
+                <td><p style="text-align: end; font-weight: 800;">{{invoicePackage.hsnTaxableTotal }}</p></td>
+                <td><p></p></td>
+                <td><p style="text-align: end; font-weight: 800;">{{invoicePackage.totalTaxAmount }}</p></td>
+                <td><p style="text-align: end; font-weight: 800;">{{invoicePackage.totalTaxAmount }}</p></td>
+            </tr>
+        </table>
+
+    {{/if}}
+    <table cellpadding="0" cellspacing="0" style="width: 100%;">
+        <tr>
+            <td style="border-bottom: none; border-top: none;"><p style="font-weight: 800; padding-top: 8px;"><span
+                    style="color:grey; font-weight: normal;">Amount Chargeable (in words) : </span> {{invoicePackage.taxWords }}
+                </p></td>
+        </tr>
+    </table>
+</div>
+<div class="row" style="margin-bottom: 0px; border-left:1px solid black; border-right:1px solid black;  ">
+    <div class="col l12" style="padding-left: 8px;">
+        
+        <div class="col l6" style="padding-bottom: 5px;">
+            <p><span style="color: grey;">Company Details</span>
+                <br><span style="color: grey;">Bank Name           : </span><span id="bank_name"
+                                                                                  style="font-weight: 800">{{invoicePackage.company.bankName }}</span>
+                <br><span style="color: grey;">Contact No.             : </span><span id="ac_no"
+                                                                                  style="font-weight: 800">{{invoicePackage.company.accountNumber }}</span>
+                <br><span style="color: grey;">Branch Manager             : </span><span id="ifs"
+                                                                                  style="font-weight: 800">{{invoicePackage.company.branch }}</span><span></span>
+                <br><span style="color: grey;">Date Est.            : </span><span id="ifs"
+                                                                                  style="font-weight: 800">{{invoicePackage.company.ifsc }}</span><br><span></span>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="row"
+     style="margin-bottom: 0px; border-left:1px solid black; border-right:1px solid black; border-bottom: 1px solid;">
+    <div class="col l12" style="padding-left: 8px; padding-right: 0px;">
+        <div class="col l6" style="padding: 0">
+            <p><br>
+                <br><span style="color: grey;">Declaration</span>
+                <br>We declare that this invoice shows the actual price of the goods described and that all particulars
+                are true and correct
+                <br>
+            </p>
+        </div>
+        <div class="col l6" style="border: 1px solid black; border-bottom: none; border-right: none;">
+            <table cellpadding="0" cellspacing="0" style="width: 100%;">
+
+                <tr>
+                    <td style="border: none; text-align: center">for {{invoicePackage.company.name}}</td>
+                </tr>
+                <tr>
+                    <td style="border:none; border-bottom: none; height: 14.8px;"></td>
+                </tr>
+                <tr>
+                    <td style="border:none; border-bottom: none; height: 14.8px;"></td>
+                </tr>
+                <tr>
+                    <td style="border: none;text-align: center;">Authorised Signatory</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+<p style="text-align: center">SUBJECT TO {{invoicePackage.company.city }} JURISDICTION<br>This is a
+    Computer Generated Invoice</p>
+
+
+<script>
+    /*window.onafterprint = function(e){
+        $(window).off('mousemove', window.onafterprint);
+        console.log('Print Dialog Closed..');
+    };
+
+    window.print();
+
+    setTimeout(function(){
+        console.log("mouse_move")
+        $(window).on('mousemove', window.onafterprint);
+    }, 1);
+    /*
+    function loadOtherPage() {
+    console.log("ok");
+    $("iframe")                             // create a new iframe element
+        .hide()                               // make it invisible
+        .attr("src", ".html") // point the iframe to the page you want to print
+        .appendTo("body");                    // add iframe to the DOM to cause it to load the page
+
+	    window.print();
+}*/
+    $(document).ready(function () {
+        var x=$(document).height();
+        var y=$(window).height();
+        console.log(x,y) ;
+        if(x>1100){
+            $('#words_table').attr('style','width: 100%; page-break-after: always; border-bottom: 1px solid black;')
+        }
+    });
+    function myFunction() {
+
+        $('#kk1').hide();
+        $('#kk2').hide();
+        window.print();
+        //loadOtherPage();
+        //window.onafterprint = afterPrint;
+     $("#change_for_transport").text("(Duplicate for Transport)");
+        $('#kk1').show();
+        $('#kk2').show()
+
+    }
+/*
+        (function() {
+
+    var beforePrint = function() {
+        console.log('Functionality to run before printing.');
+    };
+
+    var afterPrint = function() {
+        console.log('Functionality to run after printing');
+
+
+
+
+        setTimeout(function (){
+            window.print();
+    }, 10000);
+
+
+
+    };
+
+    if (window.matchMedia) {
+        var mediaQueryList = window.matchMedia('print');
+        mediaQueryList.addListener(function(mql) {
+            if (mql.matches) {
+                beforePrint();
+            } else {
+                afterPrint();
+            }
+        });
+    }
+
+    window.onbeforeprint = beforePrint;
+    window.onafterprint = afterPrint;
+
+
+}());*/
+</script>
+</body>
+</html>
